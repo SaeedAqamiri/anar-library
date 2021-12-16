@@ -1,7 +1,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <boost/optional.hpp>
 
+#include "Result.h"
+
+/*
 #include "SharedUnorderedCompositeMap.h"
 #include "ExampleUtility.h"
 
@@ -13,21 +17,30 @@ BASIC_ADAPTER_CREATOR()
 FIELD_NAMES(UDVisit, VisitListSerial)
 FIELD_TYPES(UDVisit, boost::optional<std::string>)
 END_BASIC_ADAPTER_CREATOR();
+*/
+struct UDVisit; // TODO: uncomment Ketab
 
+namespace anar
+{
 
 struct Visit
 {
 	Visit(const time_t& start_time)
 	: start_time(start_time)
-	, result(Anar::Result::State::PENDING)
+	, result(Result::State::PENDING)
 	, live_session(0)
 	{}
 	
 	time_t start_time;
-	Anar::Result result;
+	Result result;
 	size_t live_session;
 	ObjectList objects;
+
+	static constexpr double START_DELAY = 0.5;
 };
+
+bool operator < (const Visit& visit1, const Visit& visit2)
+{ return visit1.start_time + Visit::START_DELAY < visit2.start_time;}
 
 class VisitCollection
 {
@@ -40,19 +53,18 @@ public:
 private:
 	typedef std::set<Visit> VisitList;
 
-	constexpr string field_delimeter = ",";
-	constexpr string visit_delimeter = "|";
-	constexpr double START_DELAY = 0.5
+	static constexpr char field_delimeter = ',';
+	static constexpr char visit_delimeter = '|';
 
-	bool operator < (const Visit& visit1, const Visit& visit2)
-	{ return visit1.start_time + START_DELAY < visit2.start_time;}
 
-	std::string serialize(const User& user, const Domain& domain); const
-	std::string serialize(const VisitList& visits); const
-	std::string serialize(const Visit& visit); const
+	static std::string serialize(const User& user, const Domain& domain);
+	static std::string serialize(const VisitList& visits);
+	static std::string serialize(const Visit& visit);
 	
-	VisitList deserialize(const boos::optional<UDVisit>& udvisit); const
-	Visit deserialize(const std::string& serial); const
+	static VisitList deserialize(const boost::optional<UDVisit>& udvisit);
+	static Visit deserialize(const std::string& serial);
 	
-	SharedUnorderedCompositeMap<std::string, UDVisit> collection(DATABASE_NAME, TABLE_NAME, SERVER_ADDRESSES);
+	/* SharedUnorderedCompositeMap<std::string, UDVisit> collection(DATABASE_NAME, TABLE_NAME, SERVER_ADDRESSES); */
 };
+
+}

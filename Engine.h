@@ -1,6 +1,9 @@
+#ifndef ENGINE_H_
+#define ENGINE_H_
+
 #include <map>
 
-#include "Anar.h"
+#include "Result.h"
 
 namespace anar
 {
@@ -20,10 +23,12 @@ private:
 class Engine
 {
 public:
-	Anar::Result predict(const ObjectList& objects, const Domain& domain); const
+	Result predict(const ObjectList& objects, const Domain& domain) const;
 private:
-	typedef ModelZoo std::map<Domain, std::map<Page, std::vector<PageModel>>>;
+	typedef std::map<Domain, std::map<Page, std::vector<PageModel>>> ModelZoo; 
 	ModelZoo models;
 };
 
 }
+
+#endif

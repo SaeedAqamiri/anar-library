@@ -1,15 +1,16 @@
 #include "Anar.h"
 
 using namespace std;
+using namespace anar;
 
 Session* Anar::create_session(const Ipdr& ipdr, const time_t& start_time)
 {
 	Domain domain = ipdr.extract_domain();
-	if (!find(target_domains, domain))
+	if (target_domains.find(domain) == target_domains.end())
 		return nullptr;
 	User user = ipdr.extract_user();
 
-	Sesion* new_session = new Session(*this, user, domain, start_time);
+	Session* new_session = new Session(*this, user, domain, start_time);
 	open_session(new_session);
 	return new_session;
 }
