@@ -10,9 +10,8 @@ Session* Anar::create_session(const Ipdr& ipdr, const time_t& start_time)
 		return nullptr;
 	User user = ipdr.extract_user();
 
-	Session* new_session = new Session(*this, user, domain, start_time);
-	open_session(new_session);
-	return new_session;
+	open_session(user, domain, start_time);
+	return (new Session(*this, user, domain, start_time));
 }
 
 Result Anar::get_result(const Ipdr& ipdr, const time_t& start_time) const
@@ -23,7 +22,7 @@ Result Anar::get_result(const Ipdr& ipdr, const time_t& start_time) const
 	return get_result(user, domain, start_time);
 }
 
-Result Anar::get_result(const User& user, const Domain& domain, const time_t& start_time)
+Result Anar::get_result(const User& user, const Domain& domain, const time_t& start_time) const
 {
 	boost::optional<Visit> visit = visit_collection.get(user, domain, start_time);
 	if (!visit)
@@ -52,7 +51,7 @@ void Anar::close_session(const User& user, const Domain domain, const time_t& st
 		visits.erase(user, domain, start_time)
 }
 
-void Anar::add_object(const Object& object, const User& user, const Domain domain, const time_t& start_time);
+void Anar::add_object(const Object& object, const User& user, const Domain domain, const time_t& start_time)
 {	
 	boost::optional<Visit> visit = visits.get(user, domain, start_time);
 	if (!visit)

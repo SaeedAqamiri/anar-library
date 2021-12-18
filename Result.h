@@ -5,11 +5,10 @@
 #include <vector>
 #include <string>
 
-typedef std::string Page;
-
 namespace anar
 {
 
+typedef std::string Page;
 typedef std::set<Page> TopK;
 
 typedef std::string Domain;

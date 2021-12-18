@@ -8,14 +8,16 @@ namespace anar
 
 struct Ipdr
 {
-    Domain extract_domain() const
+	Domain extract_domain() const
     {
-        // TODO: Implelment
+        if "cdn.khar" in sni 
+			return "khar";
+		return sni;
     }
     
     User extract_user() const
     {
-        // TODO: Implelment
+        return "Saeed";
     }
 };
 

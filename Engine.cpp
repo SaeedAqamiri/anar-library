@@ -3,7 +3,6 @@
 using namespace std;
 using namespace anar;
 
-
 Anar::Result Engine::predict(const ObjectList& objects, const Domain& domain, Topk topk) const
 {
 	size_t n_object = objects.size();
@@ -39,8 +38,8 @@ Anar::Result Engine::predict(const ObjectList& objects, const Domain& domain, To
 	}
 
 	if (!detected)
-		return (Anar::Result(Anar::Result::PENDING, topk);
+		return (Result(Result::PENDING, topk);
 	if (topk.size())
-		return (Anar::Result(Anar::Result::DETECTED, topk);
-	return (Anar::Result(Anar::Result::UNKNOWN);
+		return (Result(Result::DETECTED, topk);
+	return (Result(Result::UNKNOWN);
 }

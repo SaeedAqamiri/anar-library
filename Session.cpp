@@ -10,7 +10,7 @@ Session::Session(const Anar& anar, const User& user, const Domain& domain, const
 {
 }
 
-Anar::Result Session::process(size_t size, const time_t& timestamp, bool direction)
+Result Session::process(size_t size, const time_t& timestamp, bool direction)
 {
 	if (direction)	// GET packet in HTTP
 	{
@@ -40,11 +40,11 @@ void Session::process_object(const Object& object)
 	last_object_time = object.start_time;
 }
 
-Anar::Result Session::bye()
+Result Session::bye()
 {
 	if (object.size != 0)
 		anar.add_object(user, domain, start_time, object);
-	Anar::Result result = anar.get_result(user, domain, start_time);
+	Result result = anar->get_result(user, domain, start_time);
 	anar.close_session(user, domain, start_time);
 	return result;
 }
