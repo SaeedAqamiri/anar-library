@@ -2,17 +2,17 @@
 #define ENGINE_H_
 
 #include <map>
-#include <vector>
 
 #include "Result.h"
 
 namespace anar
 {
 
-
 class Engine
 {
 public:
+	Engine(std::string config_path);
+
 	Result predict(const ObjectList& objects, const Domain& domain) const;
 private:
 	typedef std::map<Domain, std::map<Page, std::vector<PageModel>>> ModelZoo; 

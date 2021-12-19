@@ -1,9 +1,6 @@
 #ifndef ANAR_H_
 #define ANAR_H_
 
-#include <string>
-#include <set>
-#include <vector>
 #include <ctime>
 
 #include "Result.h"
